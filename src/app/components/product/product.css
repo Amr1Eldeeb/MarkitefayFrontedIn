@@ -1,0 +1,23 @@
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.cat-circle {
+  transition: all 0.3s ease;
+  width: 70px;
+  height: 70px;
+}
+.category-item:hover .cat-circle {
+  transform: translateY(-5px);
+  border-color: #0d6efd !important;
+  color: #0d6efd;
+}
+.product-card {
+  transition: transform 0.3s ease;
+}
+.product-card:hover {
+  transform: translateY(-8px);
+}

@@ -1,0 +1,48 @@
+.navbar {
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(10px); /* تأثير الزجاج */
+}
+
+.logo-icon {
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+}
+
+.brand-text {
+    font-size: 1.3rem;
+    letter-spacing: 1.5px;
+}
+
+/* Search Bar */
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.1);
+    background-color: #fff !important;
+    border: 1px solid #0d6efd !important;
+}
+
+/* Links */
+.nav-link {
+    color: #444 !important;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: #0d6efd !important;
+}
+
+/* Dropdown Animation */
+.animate-slide {
+    animation: dropdownSlide 0.3s ease-out;
+}
+
+@keyframes dropdownSlide {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #0d6efd, #0056b3);
+    border: none;
+}

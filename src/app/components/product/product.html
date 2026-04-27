@@ -1,0 +1,185 @@
+<div class="product-page-wrapper bg-light pb-5">
+
+  <!-- ================= BANNER ================= -->
+  <div class="banner-container container pt-4">
+
+    <div id="productCarousel" class="carousel slide shadow-sm rounded-4 overflow-hidden">
+
+      <div class="carousel-inner">
+
+        <div class="carousel-item active" style="height: 350px; background: linear-gradient(45deg, #0d6efd, #003d99);">
+
+          <div class="carousel-caption d-flex flex-column justify-content-center align-items-start h-100 text-start px-md-5">
+
+            <span class="badge bg-white text-primary mb-2 py-2 px-3 rounded-pill fw-bold">
+              SUMMER SALE
+            </span>
+
+            <h1 class="display-4 fw-bold text-white">SMART WEARABLE</h1>
+
+            <p class="lead text-white-50">
+              Exclusive offers up to 80% OFF on all smart watches.
+            </p>
+
+            <button class="btn btn-light fw-bold px-4 py-2 mt-3 text-primary shadow">
+              Shop Now
+            </button>
+
+          </div>
+
+          <i class="bi bi-watch position-absolute end-0 bottom-0 mb-n4 me-n4 opacity-25 text-white"
+             style="font-size: 20rem;"></i>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ================= CATEGORIES ================= -->
+  <div class="container mt-5">
+
+    <div class="mb-5">
+
+      <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h5 class="fw-bold m-0 border-start border-primary border-4 ps-3">
+          Top <span class="text-primary">Categories</span>
+        </h5>
+
+        <span class="badge bg-white text-muted shadow-sm px-3 py-2 rounded-pill small">
+          {{ categories.length }} Categories
+        </span>
+
+      </div>
+
+      <!-- 🔥 SCROLL CATEGORIES -->
+      <div class="position-relative">
+
+        <!-- LEFT BUTTON -->
+        <button class="btn btn-light shadow position-absolute start-0 top-50 translate-middle-y z-3"
+                (click)="scrollLeft()">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+
+        <!-- SCROLL AREA -->
+        <div #categoryScroll
+             class="d-flex gap-4 overflow-auto pb-3 px-5 no-scrollbar text-center"
+             style="scroll-behavior: smooth;">
+
+          <div class="category-item"
+               *ngFor="let cat of categories"
+               style="min-width: 100px; cursor: pointer;">
+
+            <div class="cat-circle shadow-sm bg-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-2 border">
+
+              <i class="bi fs-2 text-primary" [ngClass]="getCategoryIcon(cat.name)"></i>
+
+            </div>
+
+            <span class="small fw-bold text-muted d-block text-truncate">
+              {{ cat.name }}
+            </span>
+
+          </div>
+
+        </div>
+
+        <!-- RIGHT BUTTON -->
+        <button class="btn btn-light shadow position-absolute end-0 top-50 translate-middle-y z-3"
+                (click)="scrollRight()">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- ================= PRODUCTS ================= -->
+    <div class="mt-4">
+
+      <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h5 class="fw-bold m-0 border-start border-primary border-4 ps-3">
+          Explore Our <span class="text-primary">Products</span>
+        </h5>
+
+        <span class="text-muted small fw-bold">
+          {{ products?.length }} Products Found
+        </span>
+
+      </div>
+
+      <div class="row g-4">
+
+        <div class="col-sm-6 col-md-4 col-lg-3"
+             *ngFor="let product of products">
+
+          <div class="card h-100 border-0 shadow-sm product-card">
+
+            <!-- IMAGE -->
+            <div class="position-relative bg-light rounded-top overflow-hidden">
+
+              <img
+                [src]="product.imageUrls[currentImageIndex[product.id] || 0]"
+                class="card-img-top p-3"
+                style="height: 220px; object-fit: contain; cursor:pointer;"
+                (click)="goToDetails(product.id)"
+              />
+
+              <!-- IMAGE ARROWS -->
+              <div *ngIf="product.imageUrls.length > 1">
+
+                <button class="btn btn-light btn-sm position-absolute top-50 start-0"
+                        (click)="prevImage(product.id, product.imageUrls)">
+                  <i class="bi bi-chevron-left"></i>
+                </button>
+
+                <button class="btn btn-light btn-sm position-absolute top-50 end-0"
+                        (click)="nextImage(product.id, product.imageUrls)">
+                  <i class="bi bi-chevron-right"></i>
+                </button>
+
+              </div>
+
+            </div>
+
+            <!-- BODY -->
+            <div class="card-body d-flex flex-column p-3">
+
+              <span class="text-primary small fw-bold text-uppercase">
+                {{ product.categoryName }}
+              </span>
+
+              <h6 class="fw-bold text-truncate">
+                {{ product.name }}
+              </h6>
+
+              <div class="mt-auto d-flex justify-content-between align-items-center">
+
+                <div>
+                  <span class="fw-bold fs-5">{{ product.price }}</span>
+                  <span class="text-muted small ms-1">EGP</span>
+                </div>
+
+                <button class="btn btn-primary btn-sm rounded-circle p-2">
+                  <i class="bi bi-cart-plus"></i>
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

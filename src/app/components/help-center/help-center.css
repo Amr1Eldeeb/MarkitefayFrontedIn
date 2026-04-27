@@ -1,0 +1,44 @@
+.help-center-wrapper {
+  background-color: #f9fbff;
+  min-height: 100vh;
+}
+
+.icon-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.bg-primary-light { background-color: #e6f3ff; }
+.bg-success-light { background-color: #e7f7ed; }
+.bg-warning-light { background-color: #fff8e6; }
+
+.step-num {
+  width: 32px;
+  height: 32px;
+  background-color: #008ecc;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-weight: bold;
+}
+
+.info-card {
+  transition: transform 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-5px);
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #e6f3ff;
+  color: #008ecc;
+}

@@ -1,1 +1,63 @@
-/* You can add global styles to this file, and also import other style files */
+/* ضبط المسافات في الـ Input Group */
+.input-group-text {
+  border-color: transparent;
+  color: #adb5bd;
+  font-size: 1.1rem;
+}
+
+.form-control {
+  border-color: transparent;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  background-color: #fff !important;
+  border-color: #0d6efd;
+}
+
+/* حالة الـ Invalid - نربط الـ Icon مع الـ Input */
+.form-control.is-invalid {
+  border-color: #dc3545 !important;
+  background-image: none; /* إخفاء أيقونة بوتستراب الافتراضية لو مش حاببها */
+}
+
+.input-group:focus-within .input-group-text {
+  border-color: #0d6efd;
+  background-color: #fff !important;
+  color: #0d6efd;
+}
+
+/* أنيميشن لظهور الخطأ */
+.animate-slide {
+  display: none; 
+}
+
+/* بوتستراب بيحول الـ display لـ block لما يكون فيه is-invalid */
+.is-invalid ~ .invalid-feedback {
+  display: block;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* تحسين الزرار */
+.btn-primary {
+  background: linear-gradient(45deg, #0d6efd, #0056b3);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(13, 110, 253, 0.4);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

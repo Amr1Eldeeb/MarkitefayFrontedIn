@@ -1,0 +1,35 @@
+.footer-section {
+    font-family: 'Inter', sans-serif; /* أو أي Font نضيف شغال بيه */
+}
+
+.letter-spacing {
+    letter-spacing: 1.5px;
+}
+
+.hover-link {
+    transition: all 0.3s ease;
+}
+
+.hover-link:hover {
+    color: #0d6efd !important;
+    padding-left: 5px;
+}
+
+.social-links a {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+.social-links a:hover {
+    transform: translateY(-3px);
+    color: #0d6efd !important;
+}
+
+.payment-icons i {
+    cursor: default;
+}
+
+.bg-body-tertiary {
+    background-color: #f8f9fa !important;
+}

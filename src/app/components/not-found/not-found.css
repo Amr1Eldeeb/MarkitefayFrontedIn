@@ -1,0 +1,58 @@
+.error-wrapper {
+  background: #fdfdfd;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+}
+
+.error-content {
+  text-align: center;
+  max-width: 600px;
+  padding: 20px;
+}
+
+.image-section img {
+  width: 100%;
+  max-width: 450px;
+  margin-bottom: 20px;
+}
+
+.text-section h1 {
+  font-size: 80px;
+  font-weight: 800;
+  margin: 0;
+  color: #008ecc; /* اللون الأزرق اللي في التصميم بتاعك */
+}
+
+.text-section h3 {
+  font-size: 28px;
+  color: #333;
+  margin: 10px 0;
+}
+
+.text-section p {
+  color: #777;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.btn-primary {
+  background-color: #008ecc;
+  color: #fff;
+  padding: 14px 35px;
+  text-decoration: none;
+  border-radius: 50px; 
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: inline-block;
+  box-shadow: 0 10px 20px rgba(0, 142, 204, 0.2);
+}
+
+.btn-primary:hover {
+  background-color: #005f87;
+  transform: translateY(-3px);
+  box-shadow: 0 15px 25px rgba(0, 142, 204, 0.3);
+}
