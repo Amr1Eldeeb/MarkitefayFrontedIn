@@ -1,185 +1,144 @@
 <div class="product-page-wrapper bg-light pb-5">
 
-  <!-- ================= BANNER ================= -->
+  <!-- Banner Section -->
   <div class="banner-container container pt-4">
-
     <div id="productCarousel" class="carousel slide shadow-sm rounded-4 overflow-hidden">
-
       <div class="carousel-inner">
-
         <div class="carousel-item active" style="height: 350px; background: linear-gradient(45deg, #0d6efd, #003d99);">
-
           <div class="carousel-caption d-flex flex-column justify-content-center align-items-start h-100 text-start px-md-5">
-
-            <span class="badge bg-white text-primary mb-2 py-2 px-3 rounded-pill fw-bold">
-              SUMMER SALE
-            </span>
-
+            <span class="badge bg-white text-primary mb-2 py-2 px-3 rounded-pill fw-bold">SUMMER SALE</span>
             <h1 class="display-4 fw-bold text-white">SMART WEARABLE</h1>
-
-            <p class="lead text-white-50">
-              Exclusive offers up to 80% OFF on all smart watches.
-            </p>
-
-            <button class="btn btn-light fw-bold px-4 py-2 mt-3 text-primary shadow">
-              Shop Now
-            </button>
-
+            <p class="lead text-white-50">Exclusive offers up to 80% OFF on all smart watches.</p>
+            <button class="btn btn-light fw-bold px-4 py-2 mt-3 text-primary shadow">Shop Now</button>
           </div>
-
-          <i class="bi bi-watch position-absolute end-0 bottom-0 mb-n4 me-n4 opacity-25 text-white"
-             style="font-size: 20rem;"></i>
-
+          <i class="bi bi-watch position-absolute end-0 bottom-0 mb-n4 me-n4 opacity-25 text-white" style="font-size: 20rem;"></i>
         </div>
-
       </div>
-
     </div>
-
   </div>
 
-  <!-- ================= CATEGORIES ================= -->
   <div class="container mt-5">
-
+    <!-- Categories Section -->
     <div class="mb-5">
-
       <div class="d-flex justify-content-between align-items-center mb-4">
-
         <h5 class="fw-bold m-0 border-start border-primary border-4 ps-3">
           Top <span class="text-primary">Categories</span>
         </h5>
-
         <span class="badge bg-white text-muted shadow-sm px-3 py-2 rounded-pill small">
           {{ categories.length }} Categories
         </span>
-
       </div>
 
-      <!-- 🔥 SCROLL CATEGORIES -->
       <div class="position-relative">
-
-        <!-- LEFT BUTTON -->
-        <button class="btn btn-light shadow position-absolute start-0 top-50 translate-middle-y z-3"
-                (click)="scrollLeft()">
+        <button class="btn btn-light shadow position-absolute start-0 top-50 translate-middle-y z-3" (click)="scrollLeft()">
           <i class="bi bi-chevron-left"></i>
         </button>
 
-        <!-- SCROLL AREA -->
-        <div #categoryScroll
-             class="d-flex gap-4 overflow-auto pb-3 px-5 no-scrollbar text-center"
-             style="scroll-behavior: smooth;">
+        <div #categoryScroll class="d-flex gap-4 overflow-auto pb-3 px-5 no-scrollbar text-center" style="scroll-behavior: smooth;">
+          
+          <!-- All Categories -->
+          <div class="category-item" (click)="showAll()" style="min-width: 100px; cursor: pointer;">
+            <div class="cat-circle shadow-sm rounded-circle d-flex align-items-center justify-content-center mx-auto mb-2 border"
+                 [ngClass]="selectedCategoryId === null ? 'bg-primary text-white' : 'bg-white text-primary'">
+              <i class="bi bi-grid-fill fs-2"></i>
+            </div>
+            <span class="small fw-bold" [class.text-primary]="selectedCategoryId === null">All</span>
+          </div>
 
-          <div class="category-item"
-               *ngFor="let cat of categories"
+          <!-- Category List -->
+          <div class="category-item" 
+               *ngFor="let cat of categories" 
+               (click)="selectCategory(cat.id)"
                style="min-width: 100px; cursor: pointer;">
-
-            <div class="cat-circle shadow-sm bg-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-2 border">
-
-              <i class="bi fs-2 text-primary" [ngClass]="getCategoryIcon(cat.name)"></i>
-
+            
+            <div class="cat-circle shadow-sm rounded-circle d-flex align-items-center justify-content-center mx-auto mb-2 border"
+                 [ngClass]="selectedCategoryId === cat.id ? 'bg-primary text-white border-primary' : 'bg-white text-primary'">
+              <i class="bi fs-2" [ngClass]="getCategoryIcon(cat.name)"></i>
             </div>
 
-            <span class="small fw-bold text-muted d-block text-truncate">
+            <span class="small fw-bold d-block text-truncate" 
+                  [ngClass]="selectedCategoryId === cat.id ? 'text-primary' : 'text-muted'">
               {{ cat.name }}
             </span>
-
           </div>
 
         </div>
 
-        <!-- RIGHT BUTTON -->
-        <button class="btn btn-light shadow position-absolute end-0 top-50 translate-middle-y z-3"
-                (click)="scrollRight()">
+        <button class="btn btn-light shadow position-absolute end-0 top-50 translate-middle-y z-3" (click)="scrollRight()">
           <i class="bi bi-chevron-right"></i>
         </button>
-
       </div>
-
     </div>
 
-    <!-- ================= PRODUCTS ================= -->
+    <!-- Products Grid -->
     <div class="mt-4">
-
       <div class="d-flex justify-content-between align-items-center mb-4">
-
         <h5 class="fw-bold m-0 border-start border-primary border-4 ps-3">
           Explore Our <span class="text-primary">Products</span>
         </h5>
-
-        <span class="text-muted small fw-bold">
-          {{ products?.length }} Products Found
-        </span>
-
+        <span class="text-muted small fw-bold">{{ products?.length }} Products Found</span>
       </div>
 
-      <div class="row g-4">
-
-        <div class="col-sm-6 col-md-4 col-lg-3"
-             *ngFor="let product of products">
-
-          <div class="card h-100 border-0 shadow-sm product-card">
-
-            <!-- IMAGE -->
+      <div class="row g-4" *ngIf="products.length > 0; else noProducts">
+        <div class="col-sm-6 col-md-4 col-lg-3" *ngFor="let product of products">
+          <div class="card h-100 border-0 shadow-sm product-card rounded-4 overflow-hidden">
+            
+            <!-- Product Image & Carousel Controls -->
             <div class="position-relative bg-light rounded-top overflow-hidden">
-
-              <img
-                [src]="product.imageUrls[currentImageIndex[product.id] || 0]"
-                class="card-img-top p-3"
-                style="height: 220px; object-fit: contain; cursor:pointer;"
-                (click)="goToDetails(product.id)"
-              />
-
-              <!-- IMAGE ARROWS -->
+              <img [src]="product.imageUrls[currentImageIndex[product.id] || 0]"
+                   class="card-img-top p-3"
+                   style="height: 220px; object-fit: contain; cursor:pointer;"
+                   (click)="goToDetails(product.id)" />
+              
               <div *ngIf="product.imageUrls.length > 1">
-
-                <button class="btn btn-light btn-sm position-absolute top-50 start-0"
-                        (click)="prevImage(product.id, product.imageUrls)">
+                <button class="btn btn-white btn-sm position-absolute top-50 start-0 shadow-sm rounded-circle ms-2" (click)="prevImage(product.id, product.imageUrls)">
                   <i class="bi bi-chevron-left"></i>
                 </button>
-
-                <button class="btn btn-light btn-sm position-absolute top-50 end-0"
-                        (click)="nextImage(product.id, product.imageUrls)">
+                <button class="btn btn-white btn-sm position-absolute top-50 end-0 shadow-sm rounded-circle me-2" (click)="nextImage(product.id, product.imageUrls)">
                   <i class="bi bi-chevron-right"></i>
                 </button>
-
               </div>
-
             </div>
 
-            <!-- BODY -->
+            <!-- Card Body -->
             <div class="card-body d-flex flex-column p-3">
+              <span class="text-primary small fw-bold text-uppercase" style="font-size: 0.7rem;">{{ product.categoryName }}</span>
+              <h6 class="fw-bold text-truncate mb-1" style="cursor: pointer;" (click)="goToDetails(product.id)">{{ product.name }}</h6>
+              
+              <!-- ***** قسم النجوم الجديد (Rating Stars) ***** -->
+              <div class="product-rating mb-2">
+                <div class="stars text-warning small">
+                  <!-- عرض النجوم الملونة بناءً على التقييم (أو 5 افتراضياً) -->
+                  <i *ngFor="let star of getStars(product.rating || 5)" class="bi bi-star-fill me-1"></i>
+                  <!-- عرض النجوم الفارغة لتكملة الـ 5 نجوم -->
+                  <i *ngFor="let empty of [].constructor(5 - (product.rating || 5))" class="bi bi-star text-muted me-1"></i>
+                  <span class="text-muted ms-1" style="font-size: 0.75rem;">({{ product.rating || 5 }}.0)</span>
+                </div>
+              </div>
 
-              <span class="text-primary small fw-bold text-uppercase">
-                {{ product.categoryName }}
-              </span>
-
-              <h6 class="fw-bold text-truncate">
-                {{ product.name }}
-              </h6>
-
+              <!-- Price and Cart Button -->
               <div class="mt-auto d-flex justify-content-between align-items-center">
-
                 <div>
-                  <span class="fw-bold fs-5">{{ product.price }}</span>
+                  <span class="fw-bold fs-5 text-dark">{{ product.price | number }}</span>
                   <span class="text-muted small ms-1">EGP</span>
                 </div>
-
-                <button class="btn btn-primary btn-sm rounded-circle p-2">
-                  <i class="bi bi-cart-plus"></i>
+                <button class="btn btn-primary btn-sm rounded-circle p-2 shadow-sm" (click)="goToDetails(product.id)">
+                  <i class="bi bi-cart-plus fs-6"></i>
                 </button>
-
               </div>
-
             </div>
-
           </div>
-
         </div>
-
       </div>
 
+      <!-- No Products Template -->
+      <ng-template #noProducts>
+        <div class="text-center py-5">
+          <i class="bi bi-box-seam display-1 text-muted opacity-25"></i>
+          <p class="mt-3 text-muted fw-bold">No products found in this category.</p>
+          <button class="btn btn-outline-primary btn-sm rounded-pill" (click)="showAll()">Show All Products</button>
+        </div>
+      </ng-template>
     </div>
-
   </div>
-
 </div>

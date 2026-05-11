@@ -13,12 +13,14 @@ import { Auth } from '../../Services/auth';
 })
 export class RegisterComponent {
 
+  // تم توحيد المسميات لتكون camelCase
   registerData = {
     firstName: '',
     lastName: '',
     email: '',
     address: '',
-    password: ''
+    password: '',
+    phoneNumber: '' 
   };
 
   confirmPassword = '';
@@ -31,18 +33,26 @@ export class RegisterComponent {
     this.errorMessage = '';
     this.successMessage = '';
 
+    // إرسال كائن registerData بعد التأكد من اكتمال البيانات
     this.auth.register(this.registerData).subscribe({
       next: (response: any) => {
         this.successMessage = 'Registration successful! Redirecting...';
-        localStorage.setItem('Email', response.Email);
+        
+        // حفظ البريد الإلكتروني إذا كان السيرفر يعيده في الـ Response
+        if (response && response.email) {
+          localStorage.setItem('Email', response.email);
+        }
+
         setTimeout(() => {
-          // console.log(localStorage.getItem('email'));
-          this.router.navigate(['/confirmemail'], {queryParams: { email: this.registerData.email }});
+          this.router.navigate(['/confirmemail'], {
+            queryParams: { email: this.registerData.email }
+          });
         }, 2000);
       },
       error: (err) => {
+        // عرض تفاصيل الخطأ القادمة من السيرفر
         this.errorMessage = err.error?.message || 'Something went wrong. Please try again.';
-        console.error('Registration error:', err);
+        console.error('Registration error details:', err.error);
       }
     });
   }

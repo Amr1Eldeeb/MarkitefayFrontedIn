@@ -11,9 +11,9 @@ import { Router, RouterModule } from '@angular/router';
   styleUrls: ['./product.css']
 })
 export class Product implements OnInit {
-
   products: any[] = [];
   categories: any[] = [];
+  selectedCategoryId: number | null = null;
   currentImageIndex: { [key: number]: number } = {};
 
   @ViewChild('categoryScroll') categoryScroll!: ElementRef;
@@ -21,52 +21,97 @@ export class Product implements OnInit {
   constructor(
     private productService: ProductsService,
     private router: Router,
-    private cdr: ChangeDetectorRef, // محرك التحديث
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    console.log('Component Loaded');
     this.loadCategories();
     this.loadAllProducts();
+    this.productService.searchQuery$.subscribe(query => {
+      if (query && query.trim() !== '') {
+        this.loadSearchResults(query);
+      } else {
+        this.loadAllProducts(); 
+      }
+    });
   }
 
   loadCategories() {
     this.productService.getCategories().subscribe({
       next: (data) => {
         this.categories = data;
-        this.cdr.detectChanges(); // تحديث الشاشة فور وصول الفئات
+        this.cdr.detectChanges();
       },
-      error: (err) => console.error(err)
+      error: (err) => console.error('Error fetching categories:', err)
     });
   }
 
   loadAllProducts() {
+    this.selectedCategoryId = null; 
     this.productService.getProducts().subscribe({
       next: (res) => {
         this.products = res;
-        this.products.forEach(p => {
-          this.currentImageIndex[p.id] = 0;
-        });
-        this.cdr.detectChanges(); // تحديث الشاشة فور وصول المنتجات
+        this.resetImageIndexes();
+        this.cdr.detectChanges();
       },
-      error: (err) => console.error(err)
+      error: (err) => console.error('Error fetching products:', err)
     });
   }
 
-  goToDetails(id: number) {
-    this.router.navigate(['/details', id]);
-    // ملاحظة: الـ detectChanges هنا مش كفاية لوحدها، لازم تكون جوه الـ subscribe
+  selectCategory(categoryId: number) {
+    this.selectedCategoryId = categoryId;
+    this.productService.getProductsByCategoryId(categoryId).subscribe({
+      next: (data) => {
+        this.products = data;
+        this.resetImageIndexes();
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error fetching filtered products:', err);
+        this.products = [];
+        this.cdr.detectChanges();
+      }
+    });
+  }
+loadSearchResults(query: string) {
+    this.selectedCategoryId = null; 
+    this.productService.searchProducts(query).subscribe({
+      next: (res) => {
+        this.products = res;
+        this.resetImageIndexes();
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Search error:', err);
+        this.products = [];
+        this.cdr.detectChanges();
+      }
+    });
+  }
+  
+showAll() {
+    this.productService.setSearchQuery(''); // تصفية البحث وعرض الكل
   }
 
-  // باقي الميثودز (scroll و images) كما هي...
+  private resetImageIndexes() {
+    this.products.forEach(p => {
+      this.currentImageIndex[p.id] = 0;
+    });
+  }
+
+  
   nextImage(productId: number, images: string[]) {
     this.currentImageIndex[productId] = (this.currentImageIndex[productId] + 1) % images.length;
-    this.cdr.detectChanges(); // عشان الـ Carousel يستجيب فوراً
+    this.cdr.detectChanges();
   }
 
   prevImage(productId: number, images: string[]) {
     this.currentImageIndex[productId] = (this.currentImageIndex[productId] - 1 + images.length) % images.length;
     this.cdr.detectChanges();
+  }
+
+  goToDetails(id: number) {
+    this.router.navigate(['/details', id]);
   }
 
   scrollLeft() {
@@ -90,4 +135,8 @@ export class Product implements OnInit {
     if (lower.includes('gaming')) return 'bi-controller';
     return 'bi-tag';
   }
+  getStars(rating: number): number[] {
+  const r = rating ? Math.round(rating) : 5; 
+  return Array(r).fill(0);
+}
 }

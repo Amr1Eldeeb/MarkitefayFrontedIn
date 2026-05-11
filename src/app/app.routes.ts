@@ -14,11 +14,17 @@ import { authGuard } from './guards/auth-guard';
 import { orderComponent } from './components/order/order';
 import { HelpCenter } from './components/help-center/help-center';
 import { Profile } from './components/profile/profile';
-
+import { Dashboard } from './components/dashboard/dashboard';
+import { AddProductComponent } from './components/add-product/add-product';
+import { EditProductComponent } from './components/edit-product/edit-product';
 export const routes: Routes = 
 [
-
+ { path: '', redirectTo: 'home', pathMatch: 'full' },
     {path :'home' , component :Product},
+    {path :'dashboard/add-product' , component :AddProductComponent},
+    {path :'dashboard' , component :Dashboard},
+    {path :'dashboard/edit-product/:id' , component :EditProductComponent},
+    
     {path :'profile',component:Profile},
     { path: 'details/:id', component:Details },
     {path:'cart',component:Cart,canActivate:[authGuard]},
@@ -34,10 +40,10 @@ export const routes: Routes =
     ]
 
     },
-{ path: 'login', component: LoginComponent },
-{ path: 'register', component:RegisterComponent },
-{path:'confirmemail',component:ConfirmEmailComponent},
-    {path :'**' , component :NotFound}
+         { path: 'login', component: LoginComponent },
+         { path: 'register', component:RegisterComponent },
+         {path:'confirmemail',component:ConfirmEmailComponent},
+         {path :'**' , component :NotFound}
      
      
 

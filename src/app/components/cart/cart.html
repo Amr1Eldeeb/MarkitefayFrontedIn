@@ -34,15 +34,18 @@
                 />
               </div>
 
-              <div class="col-5 col-md-4 ps-3 ps-md-4">
-                <h6 class="fw-bold mb-1 text-truncate">{{ item.productName }}</h6>
-                <p class="text-muted small mb-2">
-                  Size:
-                  <span class="badge bg-light text-dark border">{{ item.size || 'N/A' }}</span>
-                </p>
-                <div class="fw-bold text-primary">{{ item.unitPrice | number }} EGP</div>
-              </div>
+    <div class="col-5 col-md-4 ps-3 ps-md-4">
+  <h6 class="fw-bold mb-1 text-truncate">{{ item.productName }}</h6>
+  
+  <p class="text-muted small mb-2">
+    Size: 
+    <span class="badge rounded-pill bg-dark text-white px-2" style="font-size: 0.7rem;">
+      {{ getSizeName(item.sizeId) }}
+    </span>
+  </p>
 
+  <div class="fw-bold text-primary">{{ item.unitPrice | number }} EGP</div>
+</div>
               <div class="col-2 text-center">
                 <span class="text-muted d-block small mb-2">Qty</span>
                 <div class="d-flex align-items-center justify-content-center gap-2">

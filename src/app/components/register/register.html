@@ -9,7 +9,7 @@
       </div>
     </div>
 
-    <div class="col-md-7 d-flex align-items-center justify-content-center bg-white p-4 scrollable-area">
+    <div class="col-md-7 d-flex align-items-center justify-content-center bg-white p-4 scrollable-area" style="overflow-y: auto;">
       <div class="w-100 px-lg-5" style="max-width: 650px;">
         
         <div class="mb-4">
@@ -22,18 +22,18 @@
           <div class="row">
             <div class="col-md-6 mb-3">
               <label class="form-label small fw-bold text-secondary">First Name</label>
-              <input class="form-control bg-light" placeholder="Amr" name="firstName"
+              <input class="form-control bg-light" placeholder="First Name" name="firstName"
                      required #firstName="ngModel" [(ngModel)]="registerData.firstName"
                      [class.is-invalid]="firstName.invalid && firstName.touched">
-              <div class="invalid-feedback animate-slide">First name is required.</div>
+              <div class="invalid-feedback">First name is required.</div>
             </div>
 
             <div class="col-md-6 mb-3">
               <label class="form-label small fw-bold text-secondary">Last Name</label>
-              <input class="form-control bg-light" placeholder="Khaled" name="lastName"
+              <input class="form-control bg-light" placeholder="Last Name" name="lastName"
                      required #lastName="ngModel" [(ngModel)]="registerData.lastName"
                      [class.is-invalid]="lastName.invalid && lastName.touched">
-              <div class="invalid-feedback animate-slide">Last name is required.</div>
+              <div class="invalid-feedback">Last name is required.</div>
             </div>
           </div>
 
@@ -41,10 +41,10 @@
             <label class="form-label small fw-bold text-secondary">Email Address</label>
             <div class="input-group has-validation">
               <span class="input-group-text bg-light border-end-0"><i class="bi bi-envelope"></i></span>
-              <input class="form-control bg-light border-start-0" placeholder="example@mail.com" type="email" name="email"
+              <input class="form-control bg-light border-start-0" placeholder="name@example.com" type="email" name="email"
                      required email #email="ngModel" [(ngModel)]="registerData.email"
                      [class.is-invalid]="email.invalid && email.touched">
-              <div class="invalid-feedback animate-slide">Please enter a valid email address.</div>
+              <div class="invalid-feedback">Please enter a valid email address.</div>
             </div>
           </div>
 
@@ -52,10 +52,21 @@
             <label class="form-label small fw-bold text-secondary">Address</label>
             <div class="input-group has-validation">
               <span class="input-group-text bg-light border-end-0"><i class="bi bi-geo-alt"></i></span>
-              <input class="form-control bg-light border-start-0" placeholder="Cairo, Egypt" name="address"
+              <input class="form-control bg-light border-start-0" placeholder="City, Country" name="address"
                      required #address="ngModel" [(ngModel)]="registerData.address"
                      [class.is-invalid]="address.invalid && address.touched">
-              <div class="invalid-feedback animate-slide">Address is required.</div>
+              <div class="invalid-feedback">Address is required.</div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small fw-bold text-secondary">Phone Number</label>
+            <div class="input-group has-validation">
+              <span class="input-group-text bg-light border-end-0"><i class="bi bi-telephone"></i></span>
+              <input class="form-control bg-light border-start-0" placeholder="01012345678" name="phoneNumber"
+                     required #phone="ngModel" [(ngModel)]="registerData.phoneNumber"
+                     [class.is-invalid]="phone.invalid && phone.touched">
+              <div class="invalid-feedback">Phone number is required.</div>
             </div>
           </div>
 
@@ -65,7 +76,7 @@
               <input class="form-control bg-light" placeholder="••••••••" type="password" name="password"
                      required minlength="8" #password="ngModel" [(ngModel)]="registerData.password"
                      [class.is-invalid]="password.invalid && password.touched">
-              <div class="invalid-feedback animate-slide">Min 8 characters.</div>
+              <div class="invalid-feedback">Min 8 characters.</div>
             </div>
 
             <div class="col-md-6 mb-3">
@@ -73,7 +84,7 @@
               <input class="form-control bg-light" placeholder="••••••••" type="password" name="confirmPassword"
                      required #confirmPwd="ngModel" [(ngModel)]="confirmPassword"
                      [class.is-invalid]="confirmPwd.touched && confirmPassword !== registerData.password">
-              <div class="invalid-feedback animate-slide">Passwords do not match.</div>
+              <div class="invalid-feedback">Passwords do not match.</div>
             </div>
           </div>
 

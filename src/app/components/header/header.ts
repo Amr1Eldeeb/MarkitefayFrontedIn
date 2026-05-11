@@ -1,7 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { RouterLink, RouterLinkActive } from "@angular/router";
+import { Router, RouterLink, RouterLinkActive } from "@angular/router";
 import { Auth } from '../../Services/auth';
 import { CommonModule } from '@angular/common';
+import { ProductsService } from '../../Services/product';
 
 @Component({
   selector: 'app-header',
@@ -9,12 +10,21 @@ import { CommonModule } from '@angular/common';
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
-export class Header  {
-constructor(public authService: Auth ,  private cdr: ChangeDetectorRef)
+export class Header implements OnInit {
+  cartCount: number = 0;
+constructor(public authService: Auth ,  private cdr: ChangeDetectorRef,private productService: ProductsService,private router: Router)
 {
   
 }
-  
+  ngOnInit(): void {
+this.productService.cartCount$.subscribe(count => {
+      this.cartCount = count;
+    });
+  }
+  onSearch(query: string) {
+    this.productService.setSearchQuery(query);
+    this.router.navigate(['/home']); 
+  }
   
 
 }

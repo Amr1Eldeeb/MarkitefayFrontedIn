@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ProductsService } from '../../Services/product';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-cart',
   standalone: true,
@@ -56,22 +56,49 @@ export class Cart implements OnInit {
     });
   }
 
-  deleteItem(id: number) {
-  if (confirm('Remove this item from your bag?')) {
-    this.productService.removeItem(id).subscribe({
-      next: () => {
-        this.loadCart(); 
-      },
-      error: (err) => {
-        if (err.status === 204) {
+deleteItem(id: number) {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "This item will be removed from your shopping bag",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#000000', // لون أسود متناسق مع الزراير بتاعتك
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, remove it!',
+    cancelButtonText: 'Cancel',
+    reverseButtons: true, // بيخلي زرار الإلغاء على الشمال والمسح على اليمين (أفضل للـ UX)
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.productService.removeItem(id).subscribe({
+        next: () => {
           this.loadCart();
-        } else {
-          console.error("Delete Error:", err);
-          alert("Could not remove item.");
+          
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: 'Item removed',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true
+          });
+        },
+        error: (err) => {
+          if (err.status === 204) {
+            this.loadCart();
+          } else {
+            console.error("Delete Error:", err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Could not remove the item. Please try again.',
+              confirmButtonColor: '#000000'
+            });
+          }
         }
-      }
-    });
-  }
+      });
+    }
+  });
 }
 addToCart(productId: number, quantity: number = 1) {
     const cartItem = {
@@ -82,12 +109,43 @@ addToCart(productId: number, quantity: number = 1) {
     this.productService.addToCart(cartItem).subscribe({
       next: (res) => {
         console.log("Item added successfully");
+        Swal.fire({
+          icon: 'success',
+          title: 'Added to Bag!',
+          text: 'The item has been successfully added to your shopping cart.',
+          showConfirmButton: false,
+          timer: 2000, 
+          timerProgressBar: true,
+          toast: true, 
+          position: 'top-end', 
+          background: '#ffffff',
+          iconColor: '#0d6efd', 
+        });
         this.loadCart(); 
       },
       error: (err) => {
         console.error("Add to cart error:", err);
-        alert("Failed to add item to cart.");
+Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Failed to add item. Please try again.',
+          toast: true,
+          position: 'top-end',
+          timer: 3000,
+          showConfirmButton: false
+        });
       }
     });
+  }
+
+getSizeName(sizeId: any): string {
+    if (!sizeId) return 'N/A';
+    const sizeMap: { [key: number]: string } = {
+      1: 'S',
+      2: 'M',
+      3: 'L',
+      4: 'XL'
+    };
+    return sizeMap[Number(sizeId)] || 'N/A';
   }
 }

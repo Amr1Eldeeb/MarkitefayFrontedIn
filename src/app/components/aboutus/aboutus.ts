@@ -9,5 +9,8 @@ import { RouterLinkWithHref } from "@angular/router";
   styleUrl: './aboutus.css',
 })
 export class Aboutus {
-
+contactEmail = 'support@marketify.com';
+  githubLink = 'https://github.com/YourUsername';
+  linkedinLink = 'https://linkedin.com/in/YourUsername';
+  location = 'Cairo, Egypt';
 }

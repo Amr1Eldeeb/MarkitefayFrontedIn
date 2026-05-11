@@ -17,20 +17,20 @@
 
     <div class="collapse navbar-collapse" id="navContent">
 
-      <form class="mx-auto my-3 my-lg-0 d-flex position-relative"
-            style="width: 100%; max-width: 500px;">
+<form class="mx-auto my-3 my-lg-0 d-flex position-relative" style="width: 100%; max-width: 500px;">
+  <input #searchInput 
+         class="form-control border-0 bg-light ps-4 rounded-pill py-2"
+         type="search"
+         placeholder="Search for products..."
+         (keyup.enter)="onSearch(searchInput.value)">
 
-        <input class="form-control border-0 bg-light ps-4 rounded-pill py-2"
-               type="search"
-               placeholder="Search for products, brands and more...">
-
-        <button class="btn btn-primary rounded-circle position-absolute end-0 top-50 translate-middle-y me-1 p-1"
-                style="width: 35px; height: 35px;"
-                type="submit">
-          <i class="bi bi-search small"></i>
-        </button>
-
-      </form>
+  <button class="btn btn-primary rounded-circle position-absolute end-0 top-50 translate-middle-y me-1 p-1"
+          style="width: 35px; height: 35px;"
+          type="button"
+          (click)="onSearch(searchInput.value)">
+    <i class="bi bi-search small"></i>
+  </button>
+</form>
 
       <ul class="navbar-nav align-items-center gap-2">
         <li class="nav-item">
@@ -39,12 +39,17 @@
         <li class="nav-item">
           <a class="nav-link fw-medium px-3" routerLink="/about" routerLinkActive="text-primary">About</a>
         </li>
-        <li class="nav-item me-2">
-          <a routerLink="/cart" class="nav-link position-relative">
-            <i class="bi bi-cart3 fs-5"></i>
-            <span class="position-absolute top-0 start-100 translate-middle badge bg-danger" style="font-size:10px;">0</span>
-          </a>
-        </li>
+   <li class="nav-item me-2">
+  <a routerLink="/cart" class="nav-link position-relative">
+    <i class="bi bi-cart3 fs-5"></i>
+    
+    <span *ngIf="authService.isLoggedIn() && cartCount > 0" 
+          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" 
+          style="font-size:10px;">
+      {{ cartCount }}
+    </span>
+  </a>
+</li>
       </ul>
 
       <div class="d-flex align-items-center gap-2 ms-lg-3">
